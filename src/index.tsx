@@ -25,3 +25,5 @@ export { TCViewCartEvent } from './events/TCViewCartEvent'
 export { TCViewItem } from './events/TCViewItem'
 export { TCViewItemListEvent  } from './events/TCViewItemListEvent'
 export * from './TCServerSide';
+import {TCUser} from "./TCUser"
+export const TCUserInstance = new TCUser();
