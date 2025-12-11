@@ -1,28 +1,12 @@
-import { NativeModules, Platform } from 'react-native';
-import {TCEvent} from './events/TCEvent'
-import {TCUserInstance} from '@commandersact/tccore-react-native'; 
-import { TCDevice } from './TCDevice';
+import { Platform } from 'react-native';
+import {TCEvent} from './events/TCEvent';
+import { TCServerSideBridge } from './TCServerSideBridge';
 import { TCApp } from './TCApp';
+import { TCDevice } from './TCDevice';
+//import { TCUser } from './TCUser';
+
 export const TCDeviceInstance = new TCDevice();
 export const TCAppInstance = new TCApp();
-
-
-const LINKING_ERROR =
-  `The package 'tcserverside' doesn't seem to be linked. Make sure: \n\n` +
-  Platform.select({ ios: "- You have run 'pod install'\n", default: '' }) +
-  '- You rebuilt the app after installing the package\n' +
-  '- You are not using Expo Go\n';
-
-export const TCServerSideBridge = NativeModules.Tcserverside
-  ? NativeModules.Tcserverside
-  : new Proxy(
-      {},
-      {
-        get() {
-          throw new Error(LINKING_ERROR);
-        },
-      }
-    );
 
 export async function initServerSide(siteId: number, sourceKey: string, defaultBehaviour: ETCConsentBehaviour = ETCConsentBehaviour.PB_DEFAULT_BEHAVIOUR)
 {
@@ -93,7 +77,7 @@ function onInitializedIOS(schemes: any)
     let map = new Map(Object.entries(JSON.parse(schemes)));
     TCAppInstance.initValues(map.get("app"))
     TCDeviceInstance.initValues(map.get("device"))
-    TCUserInstance.initValues(map.get("user"))
+    // TCUserInstance.initValues(map.get("user"))
 }
 
 function onInitializedAndroid(schemes: string)
@@ -101,19 +85,19 @@ function onInitializedAndroid(schemes: string)
     let map = JSON.parse(schemes)
     TCAppInstance.initValues(JSON.parse(map["app"]))
     TCDeviceInstance.initValues(JSON.parse(map["device"]))
-    TCUserInstance.initValues(JSON.parse(map["user"]))
+    //TCUserInstance.initValues(JSON.parse(map["user"]))
 }
 
 function setConsentID(consentID: string)
 {
-    TCUserInstance.consentID = consentID
+    //TCUserInstance.consentID = consentID
 
     console.log("consentID = " + consentID)
 }
 
 function setAnonymousID(anonymous_id: string)
 {
-    TCUserInstance.anonymous_id = anonymous_id
+  //  TCUserInstance.anonymous_id = anonymous_id
 
     console.log("anonymousid = " + anonymous_id)
 }
