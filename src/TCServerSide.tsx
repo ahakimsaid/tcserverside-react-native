@@ -3,7 +3,6 @@ import {TCEvent} from './events/TCEvent';
 import { TCServerSideBridge } from './TCServerSideBridge';
 import { TCApp } from './TCApp';
 import { TCDevice } from './TCDevice';
-//import { TCUser } from './TCUser';
 
 export const TCDeviceInstance = new TCDevice();
 export const TCAppInstance = new TCApp();
